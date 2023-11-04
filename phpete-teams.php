@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://phpete.com
+ * @link              https://phpete.com
  * @since             1.0.0
  * @package           Phpete_Teams
  *
  * @wordpress-plugin
  * Plugin Name:       phpete - teams
- * Plugin URI:        http://phpete.com/
+ * Plugin URI:        https://phpete.com
  * Description:       a simple plugin that lets you add showcase your wonderful colleagues / team members on wordpress
- * Version:           0.1
+ * Version:           1.0.0
  * Author:            phpete
- * Author URI:        http://phpete.com/
+ * Author URI:        https://phpete.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       phpete-teams
@@ -35,34 +35,34 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NAME_VERSION', '1.0.0' );
+define( 'PHPETE_TEAMS_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-plugin-name-activator.php
+ * This action is documented in includes/class-phpete-teams-activator.php
  */
-function activate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-activator.php';
-	Plugin_Name_Activator::activate();
+function activate_phpete_teams() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-phpete-teams-activator.php';
+	Phpete_Teams_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-plugin-name-deactivator.php
+ * This action is documented in includes/class-phpete-teams-deactivator.php
  */
-function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
+function deactivate_phpete_teams() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-phpete-teams-deactivator.php';
+	Phpete_Teams_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_plugin_name' );
-register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_activation_hook( __FILE__, 'activate_phpete_teams' );
+register_deactivation_hook( __FILE__, 'deactivate_phpete_teams' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-phpete-teams.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,10 +73,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
  *
  * @since    1.0.0
  */
-function run_plugin_name() {
+function run_phpete_teams() {
 
-	$plugin = new Plugin_Name();
+	$plugin = new Phpete_Teams();
 	$plugin->run();
 
 }
-run_plugin_name();
+run_phpete_teams();

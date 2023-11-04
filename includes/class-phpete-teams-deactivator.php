@@ -3,11 +3,11 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       http://example.com
+ * @link       https://phpete.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Phpete_Teams
+ * @subpackage Phpete_Teams/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    Phpete_Teams
+ * @subpackage Phpete_Teams/includes
+ * @author     phpete <peter@phpete.com>
  */
-class Plugin_Name_Deactivator {
+class Phpete_Teams_Deactivator {
 
 	/**
 	 * Short Description. (use period)
