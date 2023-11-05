@@ -7,7 +7,7 @@
  * so that it is ready for translation.
  *
  * @link       https://phpete.com
- * @since      1.0.0
+ * @since      0.1
  *
  * @package    Phpete_Teams
  * @subpackage Phpete_Teams/includes
@@ -19,7 +19,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @since      1.0.0
+ * @since      0.1
  * @package    Phpete_Teams
  * @subpackage Phpete_Teams/includes
  * @author     phpete <peter@phpete.com>
@@ -30,7 +30,7 @@ class Phpete_Teams_i18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function load_plugin_textdomain() {
 

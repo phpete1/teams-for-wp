@@ -7,7 +7,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       https://phpete.com
- * @since      1.0.0
+ * @since      0.1
  *
  * @package    Phpete_Teams
  * @subpackage Phpete_Teams/includes
@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.1
  * @package    Phpete_Teams
  * @subpackage Phpete_Teams/includes
  * @author     phpete <peter@phpete.com>
@@ -33,7 +33,7 @@ class Phpete_Teams {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      Phpete_Teams_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -42,7 +42,7 @@ class Phpete_Teams {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
@@ -51,7 +51,7 @@ class Phpete_Teams {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -64,13 +64,13 @@ class Phpete_Teams {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function __construct() {
 		if ( defined( 'PHPETE_TEAMS_VERSION' ) ) {
 			$this->version = PHPETE_TEAMS_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '0.1';
 		}
 		$this->plugin_name = 'phpete-teams';
 
@@ -78,6 +78,7 @@ class Phpete_Teams {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+        $this->define_post_types();
 
 	}
 
@@ -94,7 +95,7 @@ class Phpete_Teams {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -132,7 +133,7 @@ class Phpete_Teams {
 	 * Uses the Phpete_Teams_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -147,7 +148,7 @@ class Phpete_Teams {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -163,7 +164,7 @@ class Phpete_Teams {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -178,7 +179,7 @@ class Phpete_Teams {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function run() {
 		$this->loader->run();
@@ -188,7 +189,7 @@ class Phpete_Teams {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -198,7 +199,7 @@ class Phpete_Teams {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1
 	 * @return    Phpete_Teams_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -208,11 +209,21 @@ class Phpete_Teams {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {
 		return $this->version;
 	}
 
+    /**
+     * Register all the custom post types for the plugin
+     *
+     * @since 0.2
+     * @access private
+     */
+    private function define_post_types() {
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-phpete-teams-post-types.php';
+        new Phpete_Teams_Post_Types();
+    }
 }
