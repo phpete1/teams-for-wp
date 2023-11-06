@@ -50,6 +50,9 @@ class Phpete_Teams_Meta_Boxes {
         wp_nonce_field('save_team_member_meta_box', 'phpete_team_member_meta_box');
 
         $role = get_post_meta($post->ID, 'phpete_team_member_role', true);
+        $start_date = get_post_meta($post->ID, 'phpete_team_start_date', true);
+        $email = get_post_meta($post->ID, 'phpete_team_email', true);
+        $phone = get_post_meta($post->ID, 'phpete_team_phone', true);
 
         require_once plugin_dir_path(dirname(__FILE__)).'admin/partials/phpete-teams-team-member-meta-box.php';
 
@@ -62,8 +65,10 @@ class Phpete_Teams_Meta_Boxes {
         $is_valid_nonce = isset($_POST['phpete_team_member_meta_box']) && wp_verify_nonce($_POST['phpete_team_member_meta_box'], 'save_team_member_meta_box');
 
         if ($is_autosave || !$has_permission || !$is_valid_nonce || !$_POST['phpete_team_member']) return;
-        
+
         update_post_meta($post_id, 'phpete_team_member_role', $_POST['phpete_team_member']['role']);
+        update_post_meta($post_id, 'phpete_team_length_service', $_POST['phpete_team_member']['length_service']);
+
     }
 
 }

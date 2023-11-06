@@ -47,17 +47,17 @@ class Phpete_Teams_Post_Types {
 
         $args = array(
             'labels'             => $labels,
-            'public'             => false, // Whether the post type should be accessible to the public.
-            'publicly_queryable' => false, // Whether queries can be performed on the post type.
-            'show_ui'            => true, // Whether to display the post type in the admin interface.
-            'show_in_menu'       => true, // Whether the post type should appear in the admin menu.
-            'menu_position'      => 30, // Position in the admin menu.
-            'menu_icon'          => 'dashicons-groups', // Icon for the post type menu item.
-            'hierarchical'       => false, // Whether the post type should have parent-child support.
-            'supports'           => array('title', 'editor', 'thumbnail'), // Post features.
-            'taxonomies'         => array('category', 'post_tag'), // Taxonomies associated with the post type.
-            'has_archive'        => false, // Whether the post type should have an archive page.
-            'rewrite'            => array('slug' => 'team-members'), // URL slug for the post type.
+            'public'             => true,
+            'publicly_queryable' => false,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'menu_position'      => 30,
+            'menu_icon'          => 'dashicons-groups',
+            'hierarchical'       => false,
+            'supports'           => array('title', 'thumbnail'),
+            'taxonomies'         => array('department'),
+            'has_archive'        => false,
+            'rewrite'            => array('slug' => 'team-members'),
             'show_in_rest'      => false
         );
 
@@ -92,6 +92,10 @@ class Phpete_Teams_Post_Types {
         $args = array(
             'hierarchical' => true,
             'labels' => $labels,
+            'rewrite' => array(
+                'slug' => 'departments',
+                'with_front' => true
+            )
         );
 
         register_taxonomy('department', 'phpete_team_member', $args); // Change 'post' to the post type where you want to use the "Departments" taxonomy.
