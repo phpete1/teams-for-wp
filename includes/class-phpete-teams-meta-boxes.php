@@ -9,107 +9,61 @@
  * @subpackage Phpete_Teams/includes
  */
 
-class Phpete_Teams_Post_Types {
+class Phpete_Teams_Meta_Boxes {
 
     public function __construct() {
 
-        add_action('init', array($this, 'register_post_type_team_member'));
+        add_action('add_meta_boxes', array($this, 'add_team_member'));
 
-        add_action('init', array($this, 'register_taxonomy_departments'));
-
-        add_action('init', array($this, 'unregister_taxonomies'));
+        add_action('save_post', array($this, 'save_team_member'));
 
     }
 
     /**
-     * This method creates the team member post type.
+     * This method creates a meta box for team_member custom post type.
      *
-     * @since 0.2
+     * @since 0.3
      * @return void
      */
-    function register_post_type_team_member() {
-        $labels = array(
-            'name'               => _x('Team Member', 'post type general name', 'textdomain'),
-            'singular_name'      => _x('Team Member', 'post type singular name', 'textdomain'),
-            'menu_name'          => _x('Team Members', 'admin menu', 'textdomain'),
-            'name_admin_bar'     => _x('Team Members', 'add new on admin bar', 'textdomain'),
-            'add_new'            => _x('Add New', 'book', 'textdomain'),
-            'add_new_item'       => __('Add New Team Member', 'textdomain'),
-            'new_item'           => __('New Team Member', 'textdomain'),
-            'edit_item'          => __('Edit Team Member', 'textdomain'),
-            'view_item'          => __('View Team Member', 'textdomain'),
-            'all_items'          => __('All Team Members', 'textdomain'),
-            'search_items'       => __('Search Team Members', 'textdomain'),
-            'parent_item_colon'  => __('Parent Team Members:', 'textdomain'),
-            'not_found'          => __('No team members found.', 'textdomain'),
-            'not_found_in_trash' => __('No team members found in Trash.', 'textdomain')
+
+    public function add_team_member() {
+
+        add_meta_box(
+            'phpete_team_member',
+            _x('Additional Info', 'additional info meta box title', 'textdomain'),
+            array($this, 'render_team_member'),
+            'phpete_team_member',
+            'normal',
+            'high'
         );
-
-        $args = array(
-            'labels'             => $labels,
-            'public'             => false, // Whether the post type should be accessible to the public.
-            'publicly_queryable' => false, // Whether queries can be performed on the post type.
-            'show_ui'            => true, // Whether to display the post type in the admin interface.
-            'show_in_menu'       => true, // Whether the post type should appear in the admin menu.
-            'menu_position'      => 30, // Position in the admin menu.
-            'menu_icon'          => 'dashicons-groups', // Icon for the post type menu item.
-            'hierarchical'       => false, // Whether the post type should have parent-child support.
-            'supports'           => array('title', 'editor', 'thumbnail'), // Post features.
-            'taxonomies'         => array('category', 'post_tag'), // Taxonomies associated with the post type.
-            'has_archive'        => false, // Whether the post type should have an archive page.
-            'rewrite'            => array('slug' => 'team-members'), // URL slug for the post type.
-            'show_in_rest'      => false
-        );
-
-        register_post_type('team_member', $args);
-    }
-
-    /**
-     * This method creates the departments taxonomy.
-     *
-     * @since 0.2
-     * @return void
-     */
-    public function register_taxonomy_departments() {
-
-        $labels = array(
-            'name' => _x('Departments', 'taxonomy general name', 'textdomain'),
-            'singular_name' => _x('Department', 'taxonomy singular name', 'textdomain'),
-            'menu_name' => _x('Departments', 'taxonomy menu name', 'textdomain'),
-            'all_items' => _x('All Departments', 'taxonomy all items', 'textdomain'),
-            'edit_item' => _x('Edit Department', 'taxonomy edit item', 'textdomain'),
-            'view_item' => _x('View Department', 'taxonomy view item', 'textdomain'),
-            'update_item' => _x('Update Department', 'taxonomy update item', 'textdomain'),
-            'add_new_item' => _x('Add New Department', 'taxonomy add new item', 'textdomain'),
-            'new_item_name' => _x('New Department Name', 'taxonomy new item name', 'textdomain'),
-            'search_items' => _x('Search Departments', 'taxonomy search items', 'textdomain'),
-            'popular_items' => _x('Popular Departments', 'taxonomy popular items', 'textdomain'),
-            'separate_items_with_commas' => _x('Separate departments with commas', 'taxonomy separate items with commas', 'textdomain'),
-            'add_or_remove_items' => _x('Add or remove departments', 'taxonomy add or remove items', 'textdomain'),
-            'choose_from_most_used' => _x('Choose from the most used departments', 'taxonomy choose from most used', 'textdomain'),
-        );
-
-        $args = array(
-            'hierarchical' => true,
-            'labels' => $labels,
-        );
-
-        register_taxonomy('department', 'team_member', $args); // Change 'post' to the post type where you want to use the "Departments" taxonomy.
 
     }
 
     /**
-     * This method removes the default taxonomies.
+     * This method render the team member meta box and creates a nonce
      *
-     * @since 0.2
+     * @since 0.3
      * @return void
      */
+    public function render_team_member($post) {
 
-    public function unregister_taxonomies() {
+        wp_nonce_field('save_team_member_meta_box', 'phpete_team_member_meta_box');
 
-        unregister_taxonomy_for_object_type('category', 'team_member'); // Remove Categories taxonomy.
-        unregister_taxonomy_for_object_type('post_tag', 'team_member'); // Remove Tags taxonomy.
+        $role = get_post_meta($post->ID, 'phpete_team_member_role', true);
 
+        require_once plugin_dir_path(dirname(__FILE__)).'admin/partials/phpete-teams-team-member-meta-box.php';
+
+    }
+
+    public function save_team_member($post_id) {
+
+        $is_autosave = (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE);
+        $has_permission = (current_user_can('edit_post', $post_id));
+        $is_valid_nonce = isset($_POST['phpete_team_member_meta_box']) && wp_verify_nonce($_POST['phpete_team_member_meta_box'], 'save_team_member_meta_box');
+
+        if ($is_autosave || !$has_permission || !$is_valid_nonce || !$_POST['phpete_team_member']) return;
+        
+        update_post_meta($post_id, 'phpete_team_member_role', $_POST['phpete_team_member']['role']);
     }
 
 }

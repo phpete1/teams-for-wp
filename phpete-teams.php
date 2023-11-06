@@ -16,7 +16,7 @@
  * Plugin Name:       phpete - teams
  * Plugin URI:        https://phpete.com
  * Description:       a simple plugin that lets you add showcase your wonderful colleagues / team members on wordpress
- * Version:           0.2
+ * Version:           0.3
  * Author:            phpete
  * Author URI:        https://phpete.com/
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PHPETE_TEAMS_VERSION', '0.2' );
+define( 'PHPETE_TEAMS_VERSION', '0.3' );
 
 /**
  * The code that runs during plugin activation.

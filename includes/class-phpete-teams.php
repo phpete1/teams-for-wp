@@ -79,6 +79,7 @@ class Phpete_Teams {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
         $this->define_post_types();
+        $this->define_meta_boxes();
 
 	}
 
@@ -225,5 +226,17 @@ class Phpete_Teams {
     private function define_post_types() {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-phpete-teams-post-types.php';
         new Phpete_Teams_Post_Types();
+    }
+
+    /**
+     * Add all meta boxes in the plugin
+     *
+     * @since 0.3
+     * @access private
+     */
+
+    private function define_meta_boxes() {
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-phpete-teams-meta-boxes.php';
+        new Phpete_Teams_Meta_Boxes;
     }
 }

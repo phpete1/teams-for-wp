@@ -61,7 +61,7 @@ class Phpete_Teams_Post_Types {
             'show_in_rest'      => false
         );
 
-        register_post_type('team_member', $args);
+        register_post_type('phpete_team_member', $args);
     }
 
     /**
@@ -94,7 +94,7 @@ class Phpete_Teams_Post_Types {
             'labels' => $labels,
         );
 
-        register_taxonomy('department', 'team_member', $args); // Change 'post' to the post type where you want to use the "Departments" taxonomy.
+        register_taxonomy('department', 'phpete_team_member', $args); // Change 'post' to the post type where you want to use the "Departments" taxonomy.
 
     }
 
@@ -107,8 +107,8 @@ class Phpete_Teams_Post_Types {
 
     public function unregister_taxonomies() {
 
-        unregister_taxonomy_for_object_type('category', 'team_member'); // Remove Categories taxonomy.
-        unregister_taxonomy_for_object_type('post_tag', 'team_member'); // Remove Tags taxonomy.
+        unregister_taxonomy_for_object_type('category', 'phpete_team_member'); // Remove Categories taxonomy.
+        unregister_taxonomy_for_object_type('post_tag', 'phpete_team_member'); // Remove Tags taxonomy.
 
     }
 
